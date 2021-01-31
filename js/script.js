@@ -24,7 +24,17 @@ let checkAll = [];
 
 // HELPER FUNCTIONS _START _____________________________________________________________
 
-// display function show or hide, also working in loops
+
+/**
+ * display function show or hide, also working in loops
+ *
+ * @param {object} element - A object param
+ * @param {sting} display - Display property
+ * @param {integer} i - For loops. If not defined, will not executed.
+ *
+ *
+ *     
+ */
 function display (element, display, i) {
    
     if(i) {
@@ -34,7 +44,14 @@ function display (element, display, i) {
     }
 }
 
-// check if required fields are valid formation.. if yer return true if not return false
+
+
+/**
+ * Check property -  check if required fields are valid formation.. if yer return true if not return false
+ * @typedef {Object} check
+ * @property  {method} - Check all inputs
+ *
+ */
 const check =  {
     username(username) {
         return /^[\w\d]+/.test(username);
@@ -53,7 +70,11 @@ const check =  {
     }
 };
 
-//add end remove focus class on event
+ /**
+ * add end remove focus class on event
+ *
+ * 
+ */
 function focusBlur () {
     for(let i = 0; i < activities.length; i++) {
         activities[i].addEventListener('focus', () => {
@@ -65,13 +86,31 @@ function focusBlur () {
     }
 }
 
-//get any perent element.... pE - perent element function
+/**
+ * get any perent element.... pE - perent element function
+ *
+ * @param {atribute} element - any attribute
+ * @return {node} - html tag
+ *
+ *
+ */
 function pE (element) {
     let parentE = element.parentElement;
     return parentE;
 }
 
-// validate inputs by calling pE function and display functions. Element should by the "check" object - call methods
+
+
+/**
+ * validate function validate inputs by calling pE function and display functions. Element should by the "check" object - call methods
+ *
+ * @param {object} element - A object param
+ * @param {*} value - Input value (userName, email ...)
+ * @return {boolean}
+ *
+ *
+ *     
+ */
 function validate(element, value) {
     if(!element) {
         pE(value).className = 'not-valid';
@@ -101,7 +140,14 @@ display(bitcoin, 'none');
 
 //Listener functions _START _______________________________________________________________________
 
-// job role function to hide or show input
+
+/**
+ * job role function to hide or show input
+ *
+ *
+ *
+ *     
+ */
 const jobRoleListener = (e) => {
     let input = e.target.value;
     
@@ -112,7 +158,11 @@ const jobRoleListener = (e) => {
     }
 }
 
-// enable color selection and show available color by design input
+/**
+ * enable color selection and show available color by design input
+ *
+ *
+ */
 const designListener = (e) => {
     let input = e.target.value;
     input ? color.disabled = false : '';
@@ -130,7 +180,12 @@ const designListener = (e) => {
     }
 }
 
-// get the changed input end save the value to the totaCost variable.
+/**
+ * get the changed input end save the value to the totaCost variable.
+ *
+ * 
+ * 
+ */
 const activitiesBoxListener = (e) => {
     let input = e.target;
     let dayTimeChoosed = input.getAttribute('data-day-and-time');
@@ -162,7 +217,11 @@ const activitiesBoxListener = (e) => {
     activitiesCost.innerHTML = `Total: $${totalCost}`;
 }
 
-// set the choosed paymant method - show or hide the current paymant method
+/**
+ * set the choosed paymant method - show or hide the current paymant method
+ *
+ * 
+ */
 const paymentListener = (e) => {
     let value = e.target.value;
     display(bitcoin, 'none');
@@ -178,7 +237,11 @@ const paymentListener = (e) => {
    }
 }
 
-//validate the submited form call validate function for valideting
+/**
+ * validate the submited form call validate function for valideting
+ *
+ * 
+ */
 const formElementListener = (e) => {
     e.preventDefault();
     checkAll = [];
@@ -212,7 +275,11 @@ const formElementListener = (e) => {
 //Listener functions _END _____________________________________________________________________
 
 
-//key up events for real time errors - simple call the validate functions
+/**
+ * key up events for real time errors - simple call the validate functions
+ *
+ * 
+ */
 userName.addEventListener('keyup', (e) => {
     validate(check.username(userName.value), userName);  
 });
@@ -221,7 +288,11 @@ email.addEventListener('keyup', () => {
     validate(check.email(email.value), email);
 });
 
-// this key up listen for input and give real time inputs - show how many numbers to be left untill 13 digit [input.length = 'current typed digit']
+/**
+ * this key up listen for input and give real time inputs - show how many numbers to be left untill 13 digit
+ * [input.length = 'current typed digit']
+ *
+ */
 ccNum.addEventListener('keyup', (e) => {
     let input = e.target.value;
 
@@ -247,34 +318,21 @@ cvv.addEventListener('keyup', () => {
 
 //finally call listeners for all inputs and form______________________________________________THE END_______________________________
 jobRole.addEventListener('change', jobRoleListener);
+
 design.addEventListener('change', designListener);
+
 activitiesBox.addEventListener('change', activitiesBoxListener);
+
 payment.addEventListener('change', paymentListener);
-formElement.addEventListener('submit', formElementListener)
+
+formElement.addEventListener('submit', formElementListener);
+
 focusBlur();
 
 
-/**
- * This is a function.
- *
- * @param {string} n - A string param
- * @return {string} A good string
- *
- * @example
- *
- *     foo('hello')
- */
 
- /**
- * This is a function.
- *
- * @param {string} n - A string param
- * @return {string} A good string
- *
- * @example
- *
- *     foo('hello')
- */
+
+
 
 
 
