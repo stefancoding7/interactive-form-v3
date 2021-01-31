@@ -152,8 +152,7 @@ const activitiesBoxListener = (e) => {
                     activities[i].parentElement.classList.remove('disabled');
                     activities[i].disabled = false;
                 }
-                
-                
+            
             }
            
         }
@@ -255,7 +254,27 @@ formElement.addEventListener('submit', formElementListener)
 focusBlur();
 
 
+/**
+ * This is a function.
+ *
+ * @param {string} n - A string param
+ * @return {string} A good string
+ *
+ * @example
+ *
+ *     foo('hello')
+ */
 
+ /**
+ * This is a function.
+ *
+ * @param {string} n - A string param
+ * @return {string} A good string
+ *
+ * @example
+ *
+ *     foo('hello')
+ */
 
 
 
