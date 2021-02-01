@@ -54,19 +54,44 @@ function display (element, display, i) {
  */
 const check =  {
     username(username) {
-        return /^[\w\d]+/.test(username);
+        if(!username == '') {
+            return /^[\w\d]+/.test(username);
+        } else {
+            return false;
+        }
+       
     },
     email(email) {
-        return /[^@]+@[^@.]+\.[a-z]+/i.test(email);
+        if(!email == '') {
+            return /[^@]+@[^@.]+\.[a-z]+/i.test(email);
+        } else {
+            return false;
+        }
+        
     },
     ccNum(ccNum) {
-        return  /^\d{13,16}$/.test(parseInt(ccNum));
+        if(ccNum >= 13 || ccNum <= 16) {
+            return  /^\d{13,16}$/.test(parseInt(ccNum));
+        } else {
+            return false;
+        }
+        
     },
     zip(zip) {
-        return /^\d{5}$/.test(parseInt(zip));
+        if(zip >= 5) {
+            return /^\d{5}$/.test(parseInt(zip));
+        } else {
+            return false;
+        }
+        
     },
     cvv(cvv){
-        return /^\d{3}$/.test(parseInt(cvv));
+        if(cvv >= 3) {
+            return /^\d{3}$/.test(parseInt(cvv));
+        } else {
+            false;
+        }
+        
     }
 };
 
@@ -247,9 +272,13 @@ const formElementListener = (e) => {
     checkAll = [];
     validate(check.username(userName.value), userName);
     validate(check.email(email.value), email);
-    validate(check.ccNum(ccNum.value), ccNum);
-    validate(check.zip(zip.value), zip);
-    validate(check.cvv(cvv.value), cvv);
+    
+    if(payPal.style.display == 'none' || bitcoin.style.display == 'none') {
+        validate(check.ccNum(ccNum.value), ccNum);
+        validate(check.zip(zip.value), zip);
+        validate(check.cvv(cvv.value), cvv);
+    }
+    
 
     if(!totalCost){
         activitiesField.classList.remove('valid')
@@ -263,8 +292,12 @@ const formElementListener = (e) => {
         }
     
         // if all field has been validated push to the check array.. if array equel to 6 required field will submit the form
+        
         if(checkAll.length >= 6) {
             alert(`Thank you for your order ${checkAll[0]}. You have paid ${checkAll[5]}. Your confirmation email has been send on ${checkAll[1]}`);
+            window.location.reload();
+        } else if (payPal.style.display == 'none' || bitcoin.style.display == 'none' || checkAll.length >= 3) {
+            alert(`Thank you for your order ${checkAll[0]}. Your confirmation email has been send on ${checkAll[1]}`);
             window.location.reload();
         }
    
@@ -295,8 +328,10 @@ email.addEventListener('keyup', () => {
  */
 ccNum.addEventListener('keyup', (e) => {
     let input = e.target.value;
-
-    if(input.length <= 12 ) {
+    let inputType = typeof input;
+    console.log(inputType);
+    if(input.length <= 12) {
+        
         let leftNumbers = 13 - input.length;
         ccHint.innerHTML = `Enter minimum ${leftNumbers} more numbers`;
         ccHint.style.display = 'block';
@@ -329,6 +364,8 @@ formElement.addEventListener('submit', formElementListener);
 
 focusBlur();
 
+
+ 
 
 
 
