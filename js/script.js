@@ -19,7 +19,7 @@ const zip = document.querySelector('#zip');
 const cvv = document.querySelector('#cvv');
 const ccHint = document.querySelector('#cc-hint');
 let totalCost = 0;
-let checkAll = [];
+
 
 
 // HELPER FUNCTIONS _START _____________________________________________________________
@@ -63,6 +63,7 @@ const check =  {
     },
     email(email) {
         if(!email == '') {
+            
             return /[^@]+@[^@.]+\.[a-z]+/i.test(email);
         } else {
             return false;
@@ -145,7 +146,7 @@ function validate(element, value) {
     } else {
         pE(value).className = 'valid';
         display(pE(value).lastElementChild, 'none');
-        checkAll.push(value.value);
+       
         return true;
     }
 }
@@ -161,6 +162,7 @@ color.disabled = true;
 payment.options[1].selected = true;
 display(payPal, 'none');
 display(bitcoin, 'none');
+display(creditCard, 'block');
 
 
 //Listener functions _START _______________________________________________________________________
@@ -268,37 +270,59 @@ const paymentListener = (e) => {
  * 
  */
 const formElementListener = (e) => {
-    e.preventDefault();
+   
     checkAll = [];
-    validate(check.username(userName.value), userName);
-    validate(check.email(email.value), email);
     
-    if(payPal.style.display == 'none' || bitcoin.style.display == 'none') {
-        validate(check.ccNum(ccNum.value), ccNum);
-        validate(check.zip(zip.value), zip);
-        validate(check.cvv(cvv.value), cvv);
+    if(validate(check.username(userName.value), userName))  {
+        validate(check.username(userName.value), userName);
+
+    } else {
+        e.preventDefault();
+    }
+
+    if(validate(check.email(email.value), email)) {
+        validate(check.email(email.value), email)
+    } else {
+        e.preventDefault();
     }
     
+    
+    if(creditCard.style.display == 'block') {
+        if(validate(check.ccNum(ccNum.value), ccNum)) {
+            validate(check.ccNum(ccNum.value), ccNum);
+        } else {
+            e.preventDefault();
+        }
+
+        if(validate(check.zip(zip.value), zip)) {
+            validate(check.zip(zip.value), zip);
+        } else {
+            e.preventDefault();
+        }
+
+        if( validate(check.cvv(cvv.value), cvv)) {
+            validate(check.cvv(cvv.value), cvv);
+        } else {
+            e.preventDefault();
+        }
+        
+        
+       
+    }
+    
+   
 
     if(!totalCost){
+        e.preventDefault();
         activitiesField.classList.remove('valid')
         activitiesField.classList.add('not-valid');
         activitiesField.lastElementChild = 'block';  
         } else {
+            
             activitiesField.classList.add('valid')
             activitiesField.classList.remove('not-valid');
             activitiesField.lastElementChild = 'none';
-            checkAll.push(totalCost);
-        }
-    
-        // if all field has been validated push to the check array.. if array equel to 6 required field will submit the form
-        
-        if(checkAll.length >= 6) {
-            alert(`Thank you for your order ${checkAll[0]}. You have paid ${checkAll[5]}. Your confirmation email has been send on ${checkAll[1]}`);
-            window.location.reload();
-        } else if (payPal.style.display == 'none' || bitcoin.style.display == 'none' || checkAll.length >= 3) {
-            alert(`Thank you for your order ${checkAll[0]}. Your confirmation email has been send on ${checkAll[1]}`);
-            window.location.reload();
+           
         }
    
     
@@ -363,10 +387,6 @@ payment.addEventListener('change', paymentListener);
 formElement.addEventListener('submit', formElementListener);
 
 focusBlur();
-
-
- 
-
 
 
 
